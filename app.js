@@ -4,6 +4,18 @@ var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
 var path = require('path');
 
+
+//Ajax routers
+
+var hotelRouter = require('./routes/api/hotels.js');
+var restaurantRouter = require('./routes/api/restaurants.js');
+var activityRouter = require('./routes/api/activities.js');
+
+
+
+
+
+
 var db = require('./models');
 
 var app = express();
@@ -26,7 +38,14 @@ app.use('/jquery', express.static(path.join(__dirname, '/node_modules/jquery/dis
 app.use(express.static(path.join(__dirname, '/public')));
 
 // serve dynamic routes
+app.use('/api/hotels', hotelRouter);
+app.use('/api/restaurants', restaurantRouter);
+app.use('/api/activities', activityRouter);
+
 app.use(require('./routes'));
+
+
+
 
 // failed to catch req above means 404, forward to error handler
 app.use(function (req, res, next) {

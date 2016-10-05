@@ -18,9 +18,31 @@ $(function(){
   var $activitySelect = $optionsPanel.find('#activity-choices');
 
   // make all the option tags (second arg of `forEach` is a `this` binding)
-  hotels.forEach(makeOption, $hotelSelect);
+
+
+  $.ajax({
+    method: 'GET',
+    url :"/api/hotels"
+})
+  .then(function (hotels) {
+      hotels.forEach(makeOption, $hotelSelect);
+      return $.get("/api/restaurants");
+    })
+.then(function(restaurants){
   restaurants.forEach(makeOption, $restaurantSelect);
+
+  return $.get("/api/activities");
+}).then(function(activities){
   activities.forEach(makeOption, $activitySelect);
+
+})
+  .catch( console.error.bind(console) );
+
+
+
+
+
+
 
   function makeOption (databaseAttraction) {
     var $option = $('<option></option>') // makes a new option tag
