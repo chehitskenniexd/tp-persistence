@@ -10,6 +10,7 @@ var path = require('path');
 var hotelRouter = require('./routes/api/hotels.js');
 var restaurantRouter = require('./routes/api/restaurants.js');
 var activityRouter = require('./routes/api/activities.js');
+var daysRouter = require('./routes/api/days.js');
 
 
 
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use('/api/hotels', hotelRouter);
 app.use('/api/restaurants', restaurantRouter);
 app.use('/api/activities', activityRouter);
+app.use('/api/days', daysRouter);
 
 app.use(require('./routes'));
 
