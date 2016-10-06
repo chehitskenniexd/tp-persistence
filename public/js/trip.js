@@ -73,9 +73,10 @@ var tripModule = (function () {
   // globally accessible module methods
 
   var publicAPI = {
-
     load: function () {
-      $(addDay);
+      $.get('/api/days')
+        .then(dbDays => dbDays.forEach(day => days.push(dayModule.create(day))))
+        .catch(error => console.log(error));
     },
 
     switchTo: switchTo,
