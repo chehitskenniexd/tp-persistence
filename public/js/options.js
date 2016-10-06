@@ -56,9 +56,14 @@ $(function(){
     var $select = $(this).siblings('select');
     var type = $select.data('type'); // from HTML data-type attribute
     var id = $select.find(':selected').val();
+    var apiPath = type === 'activity' ? 'activities' : `${type}s`
     // get associated attraction and add it to the current day in the trip
-    var attraction = attractionsModule.getByTypeAndId(type, id);
-    tripModule.addToCurrent(attraction);
+    $.ajax({
+      method: 'GET',
+      url: `/api/${apiPath}`,
+    }).then(attractions => attractions.filter(attraction => attraction.id == id)[0])
+    .then(attraction => tripModule.addToCurrent(attractionModule.create(attraction)))
+    .catch(err => console.log(err));
   });
 
 });
